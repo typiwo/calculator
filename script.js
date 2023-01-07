@@ -38,21 +38,14 @@ let lastPressed = "";
 // Array for possible operators
 let operatorArray = ["+", "-", "x", "/", "="];
 
-/* 
-CODING THE FUNCTIONALITY
-1. User presses respective button: Display the respective number on the screen; store this number as displayNumber/firstNumber
-2. User presses operator: Save this as 'currentOperator'
-3. User presses another button: Save this as displayNumber/secondNumber
-4a. Equals is pressed: Perform computation, display result...save this result as firstNum in case stringing together more operations
-4b. Another operator is pressed: Perform computation, display result, save result as firstNum
-*/
+
 
 /* ADD EVENT LISTENERS TO NUMBER BUTTONS */
 numberButtons.forEach((button) => {
 
     // for each one we add a 'click' listener
     button.addEventListener('click', () => {
-        numberPressed(convertID(button.id));
+        numberPressed(convertID(button.id)); 
     });
   });
 
@@ -61,35 +54,40 @@ operatorButtons.forEach((button) => {
 
     // for each one we add a 'click' listener
     button.addEventListener('click', () => {
-        
+        operatorPressed(convertID(button.id));
     });
   });
 
 /* ADD EVENT LISTENER TO CLEAR BUTTON */
+clearButton.addEventListener('click', () => {
+    clearPressed();
+})
 
 /* ADD EVENT LISTENER TO DELETE BUTTON */
-
+deleteButton.addEventListener('click', () => {
+    deletePressed();
+})
 
 
 /* ARITHMETIC FUNCTIONS */
 // Adds 2 numbers
 function add(num1, num2) {
-    return num1 + num2;
+    return parseFloat(num1) + parseFloat(num2);
 }
 
 // Subtracts 2 numbers
 function subtract(num1, num2) {
-    return num1 - num2;
+    return parseFloat(num1) - parseFloat(num2);
 }
 
 // Multiplies 2 numbers
 function multiply(num1, num2) {
-    return num1 * num2;
+    return parseFloat(num1) * parseFloat(num2);
 }
 
 // Divides 2 numbers 
 function divide(num1, num2) {
-    return num1 / num2;
+    return parseFloat(num1) / parseFloat(num2);
 }
 
 /* OPERATOR FUNCTION */
@@ -101,7 +99,7 @@ function operate(num1, num2, operator) {
     else if (operator === '-') {
         return subtract(num1, num2);
     }
-    else if (operator === '*') {
+    else if (operator === 'x') {
         return multiply(num1, num2);
     }
     else if (operator === '/') {
@@ -112,11 +110,60 @@ function operate(num1, num2, operator) {
 /* NUMBER BUTTON FUNCTIONS */
 // When a number is pressed
 function numberPressed(num) {
+    if (operatorArray.includes(lastPressed)) {
+        input.textContent = "";
+    }
+
     if (input.textContent == 0) {
         input.textContent = num;
     }
     else if ((input.textContent.includes(".") && num !== ".") || !input.textContent.includes(".")) { // Don't allow 2 decimals
        input.textContent += num;
+    }
+    displayValue = input.textContent;
+    lastPressed = num;
+}
+
+/* OPERATOR BUTTON FUNCTIONS */
+function operatorPressed(op) {
+    // First, check if the last pressed button was an operator
+    if (operatorArray.includes(lastPressed)) {
+        operator = op;
+    }
+    else {
+        // If operator is already set and we have a firstValue
+        if (operatorArray.includes(operator) && firstValue !== "") {
+            displayValue = operate(firstValue, displayValue, operator);
+            firstValue = displayValue;
+            operator = op;
+            input.textContent = displayValue;
+        }
+        // If an operator is not yet set
+        else {
+            firstValue = displayValue;
+            operator = op;
+        }
+    }
+
+    lastPressed = op;
+    
+}
+
+/* CLEAR BUTTON FUNCTION */
+function clearPressed() {
+    firstValue = "";
+    displayValue = "";
+    operator = "";
+    input.textContent = 0;
+}
+
+/* DELETE BUTTON FUNCTION */
+function deletePressed() {
+    if (input.textContent.length > 1) {
+        input.textContent = input.textContent.slice(0, -1);
+    }
+    else {
+        input.textContent = 0;
     }
     displayValue = input.textContent;
 }
@@ -156,6 +203,22 @@ function convertID(id) {
     else if (id === "decimal") {
         return ".";
     }
+    else if (id === "add") {
+        return "+";
+    }
+    else if (id === "subtract") {
+        return "-";
+    }
+    else if (id === "multiply") {
+        return "x";
+    }
+    else if (id === "divide") {
+        return "/";
+    }
+    else if (id === "equals") {
+        return "=";
+    }
 }
+
 
 
