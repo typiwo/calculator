@@ -38,6 +38,12 @@ body {
     padding-left: 10px;
 }
 
+/* ALL BUTTONS */
+button:hover {
+    cursor:pointer;
+    background-color:lightslategrey;
+}
+
 /* BUTTON BODY */
 .button-body {
     display:flex;

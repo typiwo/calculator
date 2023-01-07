@@ -72,22 +72,32 @@ deleteButton.addEventListener('click', () => {
 /* ARITHMETIC FUNCTIONS */
 // Adds 2 numbers
 function add(num1, num2) {
-    return parseFloat(num1) + parseFloat(num2);
+    ans = parseFloat(num1) + parseFloat(num2);
+    return Math.round(100*ans)/100; // Round to nearest hundredth
 }
 
 // Subtracts 2 numbers
 function subtract(num1, num2) {
-    return parseFloat(num1) - parseFloat(num2);
+    ans = parseFloat(num1) - parseFloat(num2);
+    return Math.round(100*ans)/100; // Round to nearest hundredth
 }
 
 // Multiplies 2 numbers
 function multiply(num1, num2) {
-    return parseFloat(num1) * parseFloat(num2);
+    ans = parseFloat(num1) * parseFloat(num2);
+    return Math.round(100*ans)/100; // Round to nearest hundredth
 }
 
 // Divides 2 numbers 
 function divide(num1, num2) {
-    return parseFloat(num1) / parseFloat(num2);
+    if (num2 == 0) {
+        return "Error: Divide by 0"
+    }
+    else {
+        ans = parseFloat(num1) / parseFloat(num2);
+        return Math.round(100*ans)/100; // Round to nearest hundredth
+
+    }
 }
 
 /* OPERATOR FUNCTION */
