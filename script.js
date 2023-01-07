@@ -19,16 +19,24 @@ const eightButton = document.querySelector('#eight');
 const nineButton = document.querySelector('#nine');
 const screen = document.querySelector('.screen');
 const input = document.querySelector('#input');
+const numberButtons = document.querySelectorAll('.number-pad > .number');
+const operatorButtons = document.querySelectorAll('.number-pad > .operator')
 
 /* Create some important variables */
 // Value currently displayed on the screen
-let displayValue = 0;
+let displayValue = "";
 
 // First value in operation
-let firstValue = 0;
+let firstValue = "";
 
-// Second value in operation
-let secondValue = 0;
+// Current operator
+let operator = "";
+
+// Last pressed button
+let lastPressed = "";
+
+// Array for possible operators
+let operatorArray = ["+", "-", "x", "/", "="];
 
 /* 
 CODING THE FUNCTIONALITY
@@ -39,21 +47,27 @@ CODING THE FUNCTIONALITY
 4b. Another operator is pressed: Perform computation, display result, save result as firstNum
 */
 
-/* ADD EVENT LISTENERS TO EACH BUTTON */
-zeroButton.addEventListener('click', () => clickButton("0"));
-oneButton.addEventListener('click', () => clickButton("1"));
-twoButton.addEventListener('click', () => clickButton("2"));
-threeButton.addEventListener('click', () => clickButton("3"));
-fourButton.addEventListener('click', () => clickButton("4"));
-fiveButton.addEventListener('click', () => clickButton("5"));
-sixButton.addEventListener('click', () => clickButton("6"));
-sevenButton.addEventListener('click', () => clickButton("7"));
-eightButton.addEventListener('click', () => clickButton("8"));
-nineButton.addEventListener('click', () => clickButton("9"));
-clearButton.addEventListener('click', () => clickButton("clear"));
-deleteButton.addEventListener('click', () => clickButton("delete"));
+/* ADD EVENT LISTENERS TO NUMBER BUTTONS */
+numberButtons.forEach((button) => {
 
-console.log(displayValue);
+    // for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+        numberPressed(convertID(button.id));
+    });
+  });
+
+/* ADD EVENT LISTENERS TO OPERATOR BUTTONS */
+operatorButtons.forEach((button) => {
+
+    // for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+        
+    });
+  });
+
+/* ADD EVENT LISTENER TO CLEAR BUTTON */
+
+/* ADD EVENT LISTENER TO DELETE BUTTON */
 
 
 
@@ -95,96 +109,53 @@ function operate(num1, num2, operator) {
     }
 }
 
-/* DISPLAY FUNCTIONS */
-// Changes screen display based on button pressed (I don't like how long this function is...)
-function clickButton(btn) {
-    let currentInput = input.textContent;
-    if (btn === "0") {
-        if (currentInput !== "0") {
-            input.textContent += "0";
-        }
+/* NUMBER BUTTON FUNCTIONS */
+// When a number is pressed
+function numberPressed(num) {
+    if (input.textContent == 0) {
+        input.textContent = num;
     }
-    else if (btn === "1") {
-        if (currentInput !== "0"){
-            input.textContent += "1";
-        }
-        else {
-            input.textContent = "1";
-        }
+    else if ((input.textContent.includes(".") && num !== ".") || !input.textContent.includes(".")) { // Don't allow 2 decimals
+       input.textContent += num;
     }
-    else if (btn === "2") {
-        if (currentInput !== "0"){
-            input.textContent += "2";
-        }
-        else {
-            input.textContent = "2";
-        }
+    displayValue = input.textContent;
+}
+
+/* Converts button ID to respective number/symbol */
+function convertID(id) {
+    if (id === "zero") {
+        return 0;
     }
-    else if (btn === "3") {
-        if (currentInput !== "0"){
-            input.textContent += "3";
-        }
-        else {
-            input.textContent = "3";
-        }
+    else if (id === "one") {
+        return 1;
     }
-    else if (btn === "4") {
-        if (currentInput !== "0"){
-            input.textContent += "4";
-        }
-        else {
-            input.textContent = "4";
-        }
+    else if (id === "two") {
+        return 2;
     }
-    else if (btn === "5") {
-        if (currentInput !== "0"){
-            input.textContent += "5";
-        }
-        else {
-            input.textContent = "5";
-        }
+    else if (id === "three") {
+        return 3;
     }
-    else if (btn === "6") {
-        if (currentInput !== "0"){
-            input.textContent += "6";
-        }
-        else {
-            input.textContent = "6";
-        }
+    else if (id === "four") {
+        return 4;
     }
-    else if (btn === "7") {
-        if (currentInput !== "0"){
-            input.textContent += "7";
-        }
-        else {
-            input.textContent = "7";
-        }
+    else if (id === "five") {
+        return 5;
     }
-    else if (btn === "8") {
-        if (currentInput !== "0"){
-            input.textContent += "8";
-        }
-        else {
-            input.textContent = "8";
-        }
+    else if (id === "six") {
+        return 6;
     }
-    else if (btn === "9") {
-        if (currentInput !== "0"){
-            input.textContent += "9";
-        }
-        else {
-            input.textContent = "9";
-        }
+    else if (id === "seven") {
+        return 7;
     }
-    else if (btn === "clear") {
-        input.textContent = "0";
+    else if (id === "eight") {
+        return 8;
     }
-    else if (btn === "delete") { // THIS MAY NOT WORK
-        if (currentInput.length > 1) {
-            input.textContent = currentInput.slice(0, -1);
-        }
-        else {
-            input.textContent = "0";
-        }
+    else if (id === "nine") {
+        return 9;
+    }
+    else if (id === "decimal") {
+        return ".";
     }
 }
+
+
