@@ -20,7 +20,7 @@ const nineButton = document.querySelector('#nine');
 const screen = document.querySelector('.screen');
 const input = document.querySelector('#input');
 const numberButtons = document.querySelectorAll('.number-pad > .number');
-const operatorButtons = document.querySelectorAll('.number-pad > .operator')
+const operatorButtons = document.querySelectorAll('.number-pad > .operator');
 
 /* Create some important variables */
 // Value currently displayed on the screen
